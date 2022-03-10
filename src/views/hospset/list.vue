@@ -12,7 +12,8 @@ export default {
             current:1,
             limit:3,
             searchObj:{},
-            list:[]
+            list:[],
+            total:0
         }
     },
     created(){
@@ -24,6 +25,9 @@ export default {
             hospset.getHospSetList(this.current, this.limit, this.searchObj)
                 .then(res => {
                     console.log('res------',res)
+                    this.list = res.data.records;
+                    this.total = res.data.total;
+                    console.log('res放进list里面了-----------------------',this.list);
                 })
                 .catch(err => {
                     console.log('err----------',err)

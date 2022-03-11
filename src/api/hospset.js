@@ -9,5 +9,11 @@ export default{
       method: 'post',
       data: searchObj//使用json
     })
-  }
+  },
+  deleteHospSet(id) {
+    return request({
+    url: `/admin/hosp/hospitalSet/${id}`,
+    method: 'delete'
+  })
+}
 }

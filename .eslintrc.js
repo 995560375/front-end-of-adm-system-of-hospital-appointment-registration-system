@@ -110,6 +110,7 @@ module.exports = {
     'no-multiple-empty-lines': [2, {
       'max': 1
     }],
+    
     'no-native-reassign': 2,
     'no-negated-in-lhs': 2,
     'no-new-object': 2,
@@ -193,6 +194,7 @@ module.exports = {
     'object-curly-spacing': [2, 'always', {
       objectsInObjects: false
     }],
-    'array-bracket-spacing': [2, 'never']
+    'array-bracket-spacing': [2, 'never'],
+    'vue/no-parsing-error': [2, { 'x-invalid-end-tag': false }]
   }
 }

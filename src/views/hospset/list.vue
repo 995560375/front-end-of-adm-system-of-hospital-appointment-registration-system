@@ -30,10 +30,26 @@
                 </template>
             
             </el-table-column>
-            <el-table-column label="操作" width="80">
+            <el-table-column label="操作" width="250">
                 
                 <template slot-scope="scope">
-                        <el-button type="danger" icon="el-icon-delete" @click="removeDataById(scope.row.id)"></el-button>
+                        <el-button size="mini" 
+                            type="danger" 
+                            icon="el-icon-delete" 
+                            @click="removeDataById(scope.row.id)"></el-button>
+                        <el-button size="mini" 
+                            v-if="scope.row.status==1" 
+                            type="primary"  
+                            @click="lockHospSet(scope.row.id,0)">锁定</el-button>
+                        <el-button size="mini" 
+                            v-if="scope.row.status==0" 
+                            type="danger"  
+                            @click="lockHospSet(scope.row.id,1)">取消锁定</el-button>
+                        <!-- 分割线 -->
+                        <el-divider direction="vertical"></el-divider>
+                        <router-link :to="'/hospSet/edit/'+scope.row.id">
+                           <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button>
+                        </router-link>
                 </template>
             
             </el-table-column>
@@ -138,6 +154,12 @@ export default {
         handleSelectionChange(selection){
             this.multipleSelection = selection;
             console.log(this.multipleSelection)
+        },
+        lockHospSet(id,status){
+            hospset.lockHospSet(id,status)
+                .then(res => {
+                    this.getList();
+                })
         }
     }
 }

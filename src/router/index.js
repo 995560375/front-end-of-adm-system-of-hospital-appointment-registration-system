@@ -95,6 +95,13 @@ export const constantRoutes = [
         name: '医院设置添加',
         component: () => import('@/views/hospset/add'),
         meta: { title: '医院设置添加', icon: 'tree' }
+      },
+      {
+        path: 'edit/:id',
+        name: '医院设置添加',
+        component: () => import('@/views/hospset/add'),
+        meta: { title: '编辑', noCache: true },
+        hidden: true
       }
     ]
   },
@@ -159,7 +166,8 @@ export const constantRoutes = [
             component: () => import('@/views/nested/menu1/menu1-3'),
             name: 'Menu1-3',
             meta: { title: 'Menu1-3' }
-          }
+          },
+          
         ]
       },
       {

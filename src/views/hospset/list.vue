@@ -11,9 +11,12 @@
                 <el-button type="primary" @click="getList()">查询</el-button>
             </el-form-item>
         </el-form>
+        <div>
+           <el-button type="danger" size="mini" @click="removeRows()">批量删除</el-button>
+        </div>
         <!-- banner列表 -->
-        <el-table :data="list" stripe style="width: 100%">
-
+        <el-table :data="list" stripe style="width: 100%" @selection-change = "handleSelectionChange">
+            <el-table-column type="selection" width="55" />
             <el-table-column type="index" width="50" label="序号"/>
             <el-table-column prop="hosname" label="医院名称"/>
             <el-table-column prop="hoscode" label="医院编号"/>
@@ -59,7 +62,8 @@ export default {
                 hoscode: ""
             },
             list:[],
-            total:0
+            total:0,
+            multipleSelection: []
         }
     },
     created(){
@@ -103,7 +107,37 @@ export default {
                         message: '已取消删除'
                     });          
             });
-            
+        },
+        removeRows(){
+            this.$confirm('此操作将永久删除医院设置信息, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    var idList = [];
+                    for(var i = 0; i < this.multipleSelection.length; i++){
+                        idList[i] = this.multipleSelection[i].id;
+                    }
+                    hospset.batchRemoveHospSet(idList)
+                    .then(res => {
+                        //alert info
+                        this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                        });
+                        this.getList(1);
+                    })
+                    
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });          
+            });
+        },
+        handleSelectionChange(selection){
+            this.multipleSelection = selection;
+            console.log(this.multipleSelection)
         }
     }
 }

@@ -67,6 +67,13 @@
     <el-table-column prop="createTime" label="创建时间"/>
 
     <el-table-column label="操作" width="230" align="center">
+     <template slot-scope="scope">
+        <router-link :to="'/hospSet/hospital/show/'+scope.row.id">
+            <el-button type="primary" size="mini">查看</el-button>
+        </router-link>
+        <el-button v-if="scope.row.status == 1"  type="primary" size="mini" @click="updateStatus(scope.row.id, 0)">下线</el-button>
+        <el-button v-if="scope.row.status == 0"  type="danger" size="mini" @click="updateStatus(scope.row.id, 1)">上线</el-button>
+    </template>
     </el-table-column>
 </el-table>
 
@@ -132,7 +139,12 @@ export default {
                 })
         },
        
-
+        updateStatus(id, status) {
+            hospitalApi.updateStatus(id, status)
+                .then(response => {
+                    this.fetchData(this.page)
+                })
+        },
         // 当页码发生改变的时候
         changeSize(size) {
             console.log(size)
@@ -155,7 +167,11 @@ export default {
             hospitalApi.findByParentId(this.searchObj.provinceCode).then(response => {
             this.cityList = response.data
         })
-        }
-    }
+        },
+        cityChanged(){
+            this.$forceUpdate();
+        }
+    },
+    
 }
 </script>

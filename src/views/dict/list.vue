@@ -74,7 +74,9 @@ export default {
         getDictList(id){
             dict.dictList(id)
                 .then(res => {
+                    console.log("看看创建时间咋有问题--------------", res)
                     this.list = res.data
+
                 })
         },
         getChildrens(tree, treeNode, resolve){//查询下层级
